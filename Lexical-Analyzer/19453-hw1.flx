@@ -1,0 +1,64 @@
+%{
+int rowCount=1;
+%}
+
+
+%%
+"\n" {rowCount++;}
+[ \t] {}
+
+"<" {printf("%d tOPEN\n", rowCount);}
+
+"</" {printf("%d tEND\n", rowCount);	}
+
+"course" {printf("%d tCOURSE\n", rowCount );}
+
+"meeting" {printf("%d tMEETING\n", rowCount);}
+
+"item" {printf("%d tITEM\n", rowCount);}
+
+"code=" {printf("%d tCODE\n", rowCount );}
+
+"type=" {printf("%d tTYPE\n", rowCount );}
+
+"section=" {printf("%d tSECTION\n", rowCount);}
+
+"start=" {printf("%d tSTART\n", rowCount);}
+
+"day=" {printf("%d tDAY\n", rowCount);}
+
+"M" {printf("%d tMON\n", rowCount);}
+
+"T" {printf("%d tTUE\n", rowCount);}
+
+"R" {printf("%d tTHU\n", rowCount);}
+
+([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9] {printf("%d tTIME (%s) \n", rowCount,yytext);}
+
+">" {printf("%d tCLOSE\n", rowCount);}
+"/>" {printf("%d tSELF\n", rowCount);}
+
+"class" {printf("%d tCLASS\n", rowCount);}
+"constraint" {printf("%d tCONSTRAINT\n", rowCount);}
+"name=" {printf("%d tNAME\n", rowCount);}
+"instructor=" {printf("%d tINSTRUCTOR\n", rowCount);}
+"crn=" {printf("%d tCRN\n", rowCount);}
+"capacity=" {printf("%d tCAPACITY\n", rowCount);}
+"end=" {printf("%d tEND_A\n", rowCount);}
+
+\"[^"]*\" {printf("%d tSTRING (%s)\n", rowCount,yytext);}
+\'[^']*\' {printf("%d tSTRING (%s)\n", rowCount,yytext);}
+
+
+[0-9]\d {printf("%d tNUM (%s)\n", rowCount,yytext);}
+
+"W" {printf("%d tWED\n", rowCount);}
+"F" {printf("%d tFRI\n", rowCount);}
+
+
+
+%%
+
+main() {
+yylex();
+}
