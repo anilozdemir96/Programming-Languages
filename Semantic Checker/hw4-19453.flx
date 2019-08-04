@@ -1,0 +1,56 @@
+%{
+#include <stdio.h>
+#include <string.h>
+#include "hw4.h"
+#include "hw4.tab.h"
+
+
+int noOfLine = 1;
+
+
+
+%}
+
+
+DIGIT    [0-9]
+%%
+
+%union {
+char * str;
+TreeNode * ptr;
+}
+\n noOfLine++;
+[/][>] {yylval.str=copy(yytext); return tSELF;} 
+[<] {yylval.str=copy(yytext); return tOPEN;}
+[<][/] { yylval.str=copy(yytext); return tEND;}
+course  { yylval.str=copy(yytext); return tCOURSE;}
+meeting  {yylval.str=copy(yytext); return tMEETING;}
+item  {yylval.str=copy(yytext); return tITEM;} 
+code= {yylval.str=copy(yytext); return tCODE;}  
+type= {yylval.str=copy(yytext); return tTYPE;}  
+section= {yylval.str=copy(yytext); return tSECTION;}  
+start= {yylval.str=copy(yytext); return tSTART;} 
+day= {yylval.str=copy(yytext); return tDAY;}  
+M {yylval.str=copy(yytext); return tMON;} 
+T {yylval.str=copy(yytext); return tTUE;}  
+R {yylval.str=copy(yytext); return tTHU;}  
+[>] {yylval.str=copy(yytext); return tCLOSE;}   
+class {yylval.str=copy(yytext); return tCLASS;}   
+constraint {yylval.str=copy(yytext); return tCONSTRAINT;}   
+name= {yylval.str=copy(yytext); return tNAME;}  
+instructor=  {yylval.str=copy(yytext); return tINSTRUCTOR;}   
+crn= {yylval.str=copy(yytext); return tCRN;}  
+capacity= {yylval.str=copy(yytext); return tCAPACITY;}   
+end= {yylval.str=copy(yytext); return tEND_A;}   
+'[^']*' {yylval.str=copy(yytext); return tSTRING;}
+["][^"]*["] {yylval.str=copy(yytext); return tSTRING;} 
+{DIGIT}+ { 
+yylval.str=copy(yytext); 
+return tNUM;}
+W  {yylval.str=copy(yytext); return tWED;} 
+F  {yylval.str=copy(yytext); return tFRI;} 
+{DIGIT}{2}:{DIGIT}{2} {yylval.str=copy(yytext); return tTIME;}  
+\t 
+[ ] 
+
+%%
